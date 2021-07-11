@@ -180,12 +180,14 @@ function validateReservation(req, res, next) {
       const hours = Number(`${value[0]}${value[1]}`);
       const minutes = Number(`${value[3]}${value[4]}`);
       if (
-        hours > 24 ||
-        hours < 0 ||
+        hours > 20 ||
+        hours < 10 ||
         minutes < 0 ||
         minutes > 60 ||
         isNaN(minutes) ||
-        isNaN(hours)
+        isNaN(hours) ||
+        hours === 20 && minutes > 30 ||
+        hours === 10 && minutes < 30
       ) {
         isValidData = false;
         next({ status: 400, message: key });
