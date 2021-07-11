@@ -27,7 +27,7 @@ async function create(req, res) {
   res.status(201).json({ data: created[0] });
 }
 
-async function updateReservationId(req, res, next) {
+async function seatReservation(req, res, next) {
   const { table_id } = req.params;
   const { reservation_id } = req.body.data;
 
@@ -149,10 +149,10 @@ async function finishReservation(req, res) {
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [asyncErrorBoundary(validateTable), asyncErrorBoundary(create)],
-  updateReservationId: [
+  seatReservation: [
     asyncErrorBoundary(isOccupied),
     asyncErrorBoundary(reservationExists),
-    asyncErrorBoundary(updateReservationId),
+    asyncErrorBoundary(seatReservation),
   ],
   destroy: [
     asyncErrorBoundary(isOccupied),
