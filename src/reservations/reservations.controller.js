@@ -92,8 +92,9 @@ async function timeIsTaken(req, res, next) {
   const timeIsTaken = await service.timeIsTaken(
     reservation.reservation_time,
     reservation.reservation_date,
-    reservation.status
   );
+
+  console.log(timeIsTaken)
 
   if (timeIsTaken.length > 0) {
     next({ status: 400, message: "time is taken" });

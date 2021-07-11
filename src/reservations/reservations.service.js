@@ -28,7 +28,7 @@ function create(reservation) {
     ]);
 }
 
-function timeIsTaken(reservation_time, reservation_date,status) {
+function timeIsTaken(reservation_time, reservation_date) {
   return knex("reservations")
     .where({
       reservation_date:`'${reservation_date}`,
