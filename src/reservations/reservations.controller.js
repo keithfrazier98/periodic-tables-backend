@@ -144,7 +144,6 @@ function validateReservation(req, res, next) {
   if (!reservation) {
     next({ status: 400, message: "data" });
   }
-
   const {
     first_name,
     last_name,
@@ -194,11 +193,11 @@ function validateReservation(req, res, next) {
     }
 
     if (key === "reservation_date") {
+      let message = "";
 
       const date = new Date(`${value} ${attributes.reservation_time}`);
-
       if (isNaN(date)) {
-        message = key;
+        next({ status: 400, message: `${key}` });
       }
       const today = new Date(Date.now());
       const isATuesday = date.getDay() === 2;
@@ -208,7 +207,6 @@ function validateReservation(req, res, next) {
       const compareHours = date.getHours() - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
       let isInThePast = null;
-      let message = "";
       if (compareYear >= 0) {
         if (compareYear === 0) {
           if (compareMonth >= 0) {
@@ -293,8 +291,8 @@ async function editReservation(req, res, next) {
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
-    asyncErrorBoundary(timeIsTaken),
     asyncErrorBoundary(validateReservation),
+    asyncErrorBoundary(timeIsTaken),
     asyncErrorBoundary(create),
   ],
   read: asyncErrorBoundary(read),
