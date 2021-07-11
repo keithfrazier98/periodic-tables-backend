@@ -91,17 +91,16 @@ async function timeIsTaken(req, res, next) {
   const reservation = req.body.data;
   const timeIsTaken = await service.timeIsTaken(
     reservation.reservation_time,
-    reservation.reservation_date,
+    reservation.reservation_date
   );
 
-  console.log(timeIsTaken)
+  console.log(timeIsTaken);
 
   if (timeIsTaken.length > 0) {
     next({ status: 400, message: "time is taken" });
   } else {
-    next()
+    next();
   }
-
 }
 
 async function changeStatus(req, res, next) {
@@ -187,8 +186,8 @@ function validateReservation(req, res, next) {
         minutes > 60 ||
         isNaN(minutes) ||
         isNaN(hours) ||
-        hours === 20 && minutes > 30 ||
-        hours === 10 && minutes < 30
+        (hours === 20 && minutes > 30) ||
+        (hours === 10 && minutes < 30)
       ) {
         isValidData = false;
         next({ status: 400, message: key });
@@ -209,6 +208,24 @@ function validateReservation(req, res, next) {
       const compareDay = date.getDate() - today.getDate();
       const compareHours = date.getHours() - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
+      console.log(
+        "today",
+        today,
+        "tuesday",
+        isATuesday,
+        "date chosen",
+        date,
+        "compare year",
+        compareYear,
+        "compare month",
+        compareMonth,
+        "compare day",
+        compareDay,
+        "compare Hour",
+        compareHours,
+        "compare minutes",
+        compareMinutes
+      );
       let isInThePast = null;
       if (compareYear >= 0) {
         if (compareYear === 0) {
