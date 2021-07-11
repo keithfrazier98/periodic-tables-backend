@@ -201,12 +201,15 @@ function validateReservation(req, res, next) {
       if (isNaN(date)) {
         next({ status: 400, message: `${key}` });
       }
+
+  
       const today = new Date(Date.now());
+      const offset = today.getTimezoneOffset() / 60
       const isATuesday = date.getDay() === 2;
       const compareYear = date.getFullYear() - today.getFullYear();
       const compareMonth = date.getMonth() - today.getMonth();
       const compareDay = date.getDate() - today.getDate();
-      const compareHours = (date.getHours() + 7) - today.getHours();
+      const compareHours = (date.getHours() + offset) - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
       console.log(
         "today",
