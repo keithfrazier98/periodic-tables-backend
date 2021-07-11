@@ -205,6 +205,7 @@ function validateReservation(req, res, next) {
   
       const today = new Date(Date.now());
       const offset = today.getTimezoneOffset() / 60
+      console.log("offset", offset)
       const isATuesday = date.getDay() === 2;
       const compareYear = date.getFullYear() - today.getFullYear();
       const compareMonth = date.getMonth() - today.getMonth();
