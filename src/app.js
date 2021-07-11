@@ -14,9 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/dashboard", reservationsRouter)
-app.use("/api/tables", tablesRouter)
-app.use("/api/reservations", reservationsRouter);
+app.use("/dashboard", reservationsRouter)
+app.use("/tables", tablesRouter)
+app.use("/reservations", reservationsRouter);
 
 app.use(notFound);
 app.use(errorHandler);
