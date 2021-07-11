@@ -94,7 +94,6 @@ async function timeIsTaken(req, res, next) {
     reservation.reservation_date
   );
 
-  console.log(timeIsTaken);
 
   if (timeIsTaken.length > 0) {
     next({ status: 400, message: "time is taken" });
@@ -205,7 +204,6 @@ function validateReservation(req, res, next) {
   
       const today = new Date(Date.now());
       const offset = today.getTimezoneOffset() / 60
-      console.log("offset", offset, today.getTimezoneOffset(), date.getTimezoneOffset())
       const isATuesday = date.getDay() === 2;
       const compareYear = date.getFullYear() - today.getFullYear();
       const compareMonth = date.getMonth() - today.getMonth();

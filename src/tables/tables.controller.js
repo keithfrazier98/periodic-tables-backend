@@ -143,7 +143,7 @@ async function finishReservation(req, res) {
     next({ status: 400, message: "" });
   }
   await service.finishReservation(reservation_id);
-  res.sendStatus(200);
+  res.sendStatus(204);
 }
 
 module.exports = {
