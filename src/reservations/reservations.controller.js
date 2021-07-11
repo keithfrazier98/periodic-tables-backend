@@ -206,7 +206,7 @@ function validateReservation(req, res, next) {
       const compareYear = date.getFullYear() - today.getFullYear();
       const compareMonth = date.getMonth() - today.getMonth();
       const compareDay = date.getDate() - today.getDate();
-      const compareHours = date.getHours() - today.getHours();
+      const compareHours = date.getHours() - today.getHours(); + 7
       const compareMinutes = date.getMinutes() - today.getMinutes();
       console.log(
         "today",
