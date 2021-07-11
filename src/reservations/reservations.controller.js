@@ -116,7 +116,7 @@ async function changeStatus(req, res, next) {
   const status = res.locals.status;
 
   const newStatus = await service.changeStatus(status, reservation_id);
-  res.status(200).json({ data: { status: newStatus } });
+  res.status(200).json({ data: { status: newStatus[0] } });
 }
 
 async function create(req, res, next) {
