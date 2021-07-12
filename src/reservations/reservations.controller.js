@@ -89,6 +89,7 @@ function properStatus(req, res, next) {
 
 async function timeIsTaken(req, res, next) {
   const reservation = req.body.data;
+  console.log("time is taken body:" ,reservation)
   const timeIsTaken = await service.timeIsTaken(
     reservation.reservation_time,
     reservation.reservation_date
@@ -210,24 +211,7 @@ function validateReservation(req, res, next) {
       const compareDay = date.getDate() - today.getDate();
       const compareHours = date.getHours() + 7 - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
-      /*console.log(
-        "today",
-        today,
-        "tuesday",
-        isATuesday,
-        "date chosen",
-        date,
-        "compare year",
-        compareYear,
-        "compare month",
-        compareMonth,
-        "compare day",
-        compareDay,
-        "compare Hour",
-        compareHours,
-        "compare minutes",
-        compareMinutes
-      );*/
+  
       let isInThePast = null;
       if (compareYear >= 0) {
         if (compareYear === 0) {
@@ -327,7 +311,7 @@ module.exports = {
   create: [
     asyncErrorBoundary(validateReservation),
     isPeopleNumber,
-    asyncErrorBoundary(timeIsTaken),
+   // asyncErrorBoundary(timeIsTaken),
     asyncErrorBoundary(create),
   ],
   read: asyncErrorBoundary(read),

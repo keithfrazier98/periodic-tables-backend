@@ -6,6 +6,7 @@ function list() {
 }
 
 function updateRes(reservation) {
+  
   return knex("reservations")
     .select("")
     .where({ reservation_id: reservation.reservation_id })
@@ -21,7 +22,7 @@ function assignId(table_id, reservation_id) {
 }
 
 function create(table) {
-  return knex("tables").insert(table).returning(["table_name", "capacity"]);
+  return knex("tables").insert(table).returning(["table_id", "table_name", "capacity"]);
 }
 
 function reservationExists(reservation_id) {

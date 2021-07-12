@@ -19,6 +19,7 @@ function create(reservation) {
   return knex("reservations")
     .insert(reservation)
     .returning([
+      "reservation_id",
       "reservation_date",
       "first_name",
       "last_name",

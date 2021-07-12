@@ -144,9 +144,6 @@ async function freeTable(req, res, next) {
   if (!res.locals.isOccupied) {
     next({ status: 400, message: "not occupied" });
   }
-
-  const { table_id } = req.params;
-  //await service.freeTable(table_id);
   next();
 }
 
@@ -160,7 +157,8 @@ async function finishReservation(req, res) {
   let updated = await service.updateRes({
     ...resev,
     status:"finished"
-  })
+  }, table_id)
+  await service.freeTable(table_id);
   res.sendStatus(200);
 }
 
