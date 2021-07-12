@@ -1,5 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
+const ReservationService = require("../reservations/reservations.service")
 
 function validateTable(req, res, next) {
   const data = req.body.data;
@@ -43,9 +44,21 @@ async function seatReservation(req, res, next) {
   }
 
   const status = res.locals.reservation.status;
-  let assignedId = await service.assignId(table_id, reservation_id);
-  res.status(200).json({ data: { status: status } });
+  await service.assignId(table_id, reservation_id);
+  let resev = await ReservationService.read(reservation_id)
+  if(resev.status === "seated"){
+    next({
+      message: "already seated",
+      status:400
+    })
+  }
+  let updated = await service.updateRes({
+    ...resev,
+    status:"seated"
+  })
+  res.status(200).json({ data: updated });
 }
+
 
 async function reservationExists(req, res, next) {
   if (!req.body.data) {
@@ -69,7 +82,7 @@ async function reservationExists(req, res, next) {
 
 async function isOccupied(req, res, next) {
   const { table_id } = req.params;
-  const table = await service.getTable(table_id);
+  const table = await service.read(table_id);
 
   if (!table) {
     next({ status: 404, message: table_id });
@@ -133,17 +146,22 @@ async function freeTable(req, res, next) {
   }
 
   const { table_id } = req.params;
-  await service.freeTable(table_id);
+  //await service.freeTable(table_id);
   next();
 }
 
 async function finishReservation(req, res) {
-  const { reservation_id } = res.locals.table;
-  if (!reservation_id) {
-    next({ status: 400, message: "" });
-  }
-  await service.finishReservation(reservation_id);
-  res.sendStatus(204);
+  const { table_id } = req.params;
+
+  let table = await service.read( table_id )
+  console.log(table)
+  const {reservation_id} = table
+  let resev = await ReservationService.read(reservation_id)
+  let updated = await service.updateRes({
+    ...resev,
+    status:"finished"
+  })
+  res.sendStatus(200);
 }
 
 module.exports = {

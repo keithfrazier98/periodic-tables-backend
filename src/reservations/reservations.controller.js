@@ -94,7 +94,6 @@ async function timeIsTaken(req, res, next) {
     reservation.reservation_date
   );
 
-
   if (timeIsTaken.length > 0) {
     next({ status: 400, message: "time is taken" });
   } else {
@@ -119,14 +118,16 @@ async function changeStatus(req, res, next) {
 }
 
 async function create(req, res, next) {
-  const reservation = req.body.data;
+  let reservation = req.body.data;
   if (!reservation) {
     next({ status: 400, message: "no reservation" });
+  }
+  if (!reservation.status) {
+    reservation = { ...reservation, status: "booked" };
   }
   if (reservation.status === "finished") {
     next({ status: 400, message: "finished" });
   }
-
   if (reservation.status === "seated") {
     next({ status: 400, message: "seated" });
   }
@@ -201,16 +202,15 @@ function validateReservation(req, res, next) {
         next({ status: 400, message: `${key}` });
       }
 
-  
       const today = new Date(Date.now());
-      const offset = today.getTimezoneOffset() / 60
+      const offset = today.getTimezoneOffset() / 60;
       const isATuesday = date.getDay() === 2;
       const compareYear = date.getFullYear() - today.getFullYear();
       const compareMonth = date.getMonth() - today.getMonth();
       const compareDay = date.getDate() - today.getDate();
-      const compareHours = (date.getHours() + 7) - today.getHours();
+      const compareHours = date.getHours() + 7 - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
-      console.log(
+      /*console.log(
         "today",
         today,
         "tuesday",
@@ -227,7 +227,7 @@ function validateReservation(req, res, next) {
         compareHours,
         "compare minutes",
         compareMinutes
-      );
+      );*/
       let isInThePast = null;
       if (compareYear >= 0) {
         if (compareYear === 0) {
@@ -310,10 +310,23 @@ async function editReservation(req, res, next) {
   res.status(200).json({ data: update[0] });
 }
 
+function isPeopleNumber(req, res , next){
+  const { data : {people} = {}} = req.body;
+  if (typeof people !== 'number'){
+    return next({
+      status: 400,
+      message: "people: must be a Number",
+    })}
+  else{
+    next()
+  }
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [
     asyncErrorBoundary(validateReservation),
+    isPeopleNumber,
     asyncErrorBoundary(timeIsTaken),
     asyncErrorBoundary(create),
   ],
@@ -325,6 +338,7 @@ module.exports = {
   ],
   editReservation: [
     asyncErrorBoundary(validateReservation),
+    isPeopleNumber,
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(editReservation),
   ],
