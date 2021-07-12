@@ -51,6 +51,7 @@ async function read(req, res, next) {
   }
 }
 
+// validate reservation exists -> set resrvation as local vairable or call error
 async function reservationExists(req, res, next) {
   const { reservation_id } = req.params;
 
@@ -63,6 +64,7 @@ async function reservationExists(req, res, next) {
   }
 }
 
+// validate reservation has proper status when updating status
 function properStatus(req, res, next) {
   const { status } = req.body.data;
   const reservation = res.locals.reservation;
@@ -87,21 +89,7 @@ function properStatus(req, res, next) {
   }
 }
 
-async function timeIsTaken(req, res, next) {
-  const reservation = req.body.data;
-  console.log("time is taken body:" ,reservation)
-  const timeIsTaken = await service.timeIsTaken(
-    reservation.reservation_time,
-    reservation.reservation_date
-  );
-
-  if (timeIsTaken.length > 0) {
-    next({ status: 400, message: "time is taken" });
-  } else {
-    next();
-  }
-}
-
+// change status of reservation in database
 async function changeStatus(req, res, next) {
   const { reservation_id } = req.params;
   if (!reservation_id) {
@@ -118,6 +106,7 @@ async function changeStatus(req, res, next) {
   res.status(200).json({ data: { status: newStatus[0] } });
 }
 
+//create a new reservation
 async function create(req, res, next) {
   let reservation = req.body.data;
   if (!reservation) {
@@ -139,6 +128,7 @@ async function create(req, res, next) {
   });
 }
 
+//validate req.body reservation has proper data or return error
 function validateReservation(req, res, next) {
   const reservation = req.body.data;
 
@@ -274,6 +264,7 @@ function validateReservation(req, res, next) {
   }
 }
 
+//edit existing resrevation data
 async function editReservation(req, res, next) {
   const { reservation_id } = req.params;
 
@@ -311,7 +302,6 @@ module.exports = {
   create: [
     asyncErrorBoundary(validateReservation),
     isPeopleNumber,
-   // asyncErrorBoundary(timeIsTaken),
     asyncErrorBoundary(create),
   ],
   read: asyncErrorBoundary(read),

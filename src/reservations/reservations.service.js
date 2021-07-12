@@ -29,16 +29,7 @@ function create(reservation) {
     ]);
 }
 
-function timeIsTaken(reservation_time, reservation_date) {
-  return knex("reservations")
-    .where({
-      reservation_date:`'${reservation_date}`,
-      reservation_time:`'${reservation_time}'`,
-      status:'booked'
-    }
-      )
-    .select("*");
-}
+
 
 function read(reservation_id) {
   return knex("reservations")
@@ -93,6 +84,5 @@ module.exports = {
   read,
   changeStatus,
   editReservation,
-  timeIsTaken,
   search,
 };

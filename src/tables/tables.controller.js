@@ -2,6 +2,8 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
 const ReservationService = require("../reservations/reservations.service")
 
+
+// validate table in req.body has proper data
 function validateTable(req, res, next) {
   const data = req.body.data;
 
@@ -22,6 +24,7 @@ function validateTable(req, res, next) {
   next();
 }
 
+// create a new table
 async function create(req, res) {
   const table = req.body.data;
   const created = await service.create(table);
@@ -59,7 +62,7 @@ async function seatReservation(req, res, next) {
   res.status(200).json({ data: updated });
 }
 
-
+// validate reservation exists
 async function reservationExists(req, res, next) {
   if (!req.body.data) {
     next({ status: 400, message: "data" });
@@ -80,6 +83,7 @@ async function reservationExists(req, res, next) {
   }
 }
 
+// validate whether a table is already occupied
 async function isOccupied(req, res, next) {
   const { table_id } = req.params;
   const table = await service.read(table_id);
@@ -99,6 +103,7 @@ async function isOccupied(req, res, next) {
   }
 }
 
+// list and sort all tables by name
 async function list(req, res) {
   const list = await service.list();
   list.sort((t1, t2) => {
@@ -140,18 +145,19 @@ async function list(req, res) {
   });
 }
 
-async function freeTable(req, res, next) {
+// validate whether a table is free 
+function freeTable(req, res, next) {
   if (!res.locals.isOccupied) {
     next({ status: 400, message: "not occupied" });
   }
   next();
 }
 
+// finish reservation and clear table
 async function finishReservation(req, res) {
   const { table_id } = req.params;
 
   let table = await service.read( table_id )
-  console.log(table)
   const {reservation_id} = table
   let resev = await ReservationService.read(reservation_id)
   let updated = await service.updateRes({
@@ -172,7 +178,7 @@ module.exports = {
   ],
   destroy: [
     asyncErrorBoundary(isOccupied),
-    asyncErrorBoundary(freeTable),
+    freeTable,
     asyncErrorBoundary(finishReservation),
   ],
 };
