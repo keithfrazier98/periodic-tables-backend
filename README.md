@@ -21,7 +21,7 @@ Express backend with routes to handle API calls and send/request data to and fro
 
 ### **reservations** 
 
-    reservations.controller middleware uses reservations.service file, which uses knex queries to make queries to the database
+   reservations.controller middleware uses reservations.service file, which uses knex queries to make queries to the database
 
 **middleware breakdown:** 
 
@@ -58,7 +58,7 @@ Express backend with routes to handle API calls and send/request data to and fro
 
 ## **tables**
     
-    tables.controller middleware uses tables.service file, which uses knex queries to make queries to the database
+   tables.controller middleware uses tables.service file, which uses knex queries to make queries to the database
 
 **middleware breakdown**
 
