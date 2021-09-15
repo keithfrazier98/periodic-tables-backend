@@ -116,3 +116,6 @@ tables.controller middleware uses tables.service file, which uses knex queries t
   - finds the record withe the matching table_id and delets it from the database
 
 
+## Edge Cases: 
+  - the code handles edge cases with the errorHandler file which will return an HTTP response with an error status and message
+  - any calls to a nonexistant route will be handled with the notFound file which will return an HTTP response with an error statusand message
