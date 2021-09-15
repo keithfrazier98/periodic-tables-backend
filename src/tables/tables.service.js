@@ -25,6 +25,10 @@ function create(table) {
   return knex("tables").insert(table).returning(["table_id", "table_name", "capacity"]);
 }
 
+function destroy(table_id){
+  return knex("tables").whereRaw(`table_id=${table_id}`).del()
+}
+
 function reservationExists(reservation_id) {
   return knex("reservations")
     .whereRaw(`reservation_id=${reservation_id}`)
@@ -57,5 +61,6 @@ module.exports = {
   read,
   finishReservation,
   reservationExists,
-  updateRes
+  updateRes, 
+  destroy
 };

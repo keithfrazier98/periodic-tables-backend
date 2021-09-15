@@ -1,7 +1,6 @@
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const service = require("./tables.service");
-const ReservationService = require("../reservations/reservations.service")
-
+const ReservationService = require("../reservations/reservations.service");
 
 // validate table in req.body has proper data
 function validateTable(req, res, next) {
@@ -48,17 +47,17 @@ async function seatReservation(req, res, next) {
 
   const status = res.locals.reservation.status;
   await service.assignId(table_id, reservation_id);
-  let resev = await ReservationService.read(reservation_id)
-  if(resev.status === "seated"){
+  let resev = await ReservationService.read(reservation_id);
+  if (resev.status === "seated") {
     next({
       message: "already seated",
-      status:400
-    })
+      status: 400,
+    });
   }
   let updated = await service.updateRes({
     ...resev,
-    status:"seated"
-  })
+    status: "seated",
+  });
   res.status(200).json({ data: updated });
 }
 
@@ -145,7 +144,7 @@ async function list(req, res) {
   });
 }
 
-// validate whether a table is free 
+// validate whether a table is free
 function freeTable(req, res, next) {
   if (!res.locals.isOccupied) {
     next({ status: 400, message: "not occupied" });
@@ -153,17 +152,26 @@ function freeTable(req, res, next) {
   next();
 }
 
+async function removeTable(req, res, next) {
+  const { table_id } = req.params;
+  await service.destroy(table_id);
+  res.status(200);
+}
+
 // finish reservation and clear table
 async function finishReservation(req, res) {
   const { table_id } = req.params;
 
-  let table = await service.read( table_id )
-  const {reservation_id} = table
-  let resev = await ReservationService.read(reservation_id)
-  let updated = await service.updateRes({
-    ...resev,
-    status:"finished"
-  }, table_id)
+  let table = await service.read(table_id);
+  const { reservation_id } = table;
+  let resev = await ReservationService.read(reservation_id);
+  let updated = await service.updateRes(
+    {
+      ...resev,
+      status: "finished",
+    },
+    table_id
+  );
   await service.freeTable(table_id);
   res.sendStatus(200);
 }
@@ -181,4 +189,5 @@ module.exports = {
     freeTable,
     asyncErrorBoundary(finishReservation),
   ],
+  removeTable: asyncErrorBoundary(removeTable)
 };
