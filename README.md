@@ -1,5 +1,7 @@
 # Capstone: Restaurant Reservation System Backend
 
+> Link to frontend repo: https://github.com/keithfrazier98/periodic-tables-frontend
+
 ## **Summary**
 
 Express backend with routes to handle API calls and send/request data to and from Heroku-PostgresSQL database using knex queries.
