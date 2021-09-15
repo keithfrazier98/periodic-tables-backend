@@ -152,10 +152,10 @@ function freeTable(req, res, next) {
   next();
 }
 
-async function removeTable(req, res, next) {
-  const { table_id } = req.params;
+async function removeTable(req, res) {
+  const table_id = req.query.table_id;
   await service.destroy(table_id);
-  res.status(200);
+  res.status(200).json({ data: "deleted" });
 }
 
 // finish reservation and clear table
@@ -173,7 +173,7 @@ async function finishReservation(req, res) {
     table_id
   );
   await service.freeTable(table_id);
-  res.sendStatus(200);
+  res.status(200).json({data:"finished"})
 }
 
 module.exports = {
@@ -189,5 +189,5 @@ module.exports = {
     freeTable,
     asyncErrorBoundary(finishReservation),
   ],
-  removeTable: asyncErrorBoundary(removeTable)
+  removeTable: asyncErrorBoundary(removeTable),
 };
