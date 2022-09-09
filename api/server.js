@@ -3,17 +3,16 @@ const { PORT = 5000 } = process.env;
 const app = require("./app");
 const knex = require("../src/db/connection");
 
-knex.migrate
-  .latest()
-  .then((migrations) => {
+async function listener() {
+  try {
+    const migrations = await knex.migrate.latest();
     console.log("migrations", migrations);
-    app.listen(PORT, listener);
-  })
-  .catch((error) => {
+    app.listen(PORT, () => console.log(`Listening on Port ${PORT}!`));
+  } catch (error) {
     console.error(error);
     knex.destroy();
-  });
-
-function listener() {
-  console.log(`Listening on Port ${PORT}!`);
+  }
 }
+
+const server = listener();
+export { listener };
