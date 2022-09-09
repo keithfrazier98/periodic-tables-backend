@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var _a = process.env.PORT, PORT = _a === void 0 ? 5000 : _a;
-var connection_1 = __importDefault(require("./src/db/connection"));
 var path_1 = __importDefault(require("path"));
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: path_1.default.join(__dirname, "..", ".env") });
@@ -22,14 +21,14 @@ app.use("/api/tables", router_2.default);
 app.use("/api/reservations", router_1.default);
 app.use(notFound_1.default);
 app.use(errorHandler_1.default);
-connection_1.default.migrate
-    .latest()
-    .then(function (migrations) {
-    console.log("migrations", migrations);
-    app.listen(PORT, function () { return console.log("Listening on Port ".concat(PORT, "!")); });
-})
-    .catch(function (error) {
-    console.error(error);
-    connection_1.default.destroy();
-});
+// knex.migrate
+//   .latest()
+//   .then((migrations) => {
+//     console.log("migrations", migrations);
+app.listen(PORT, function () { return console.log("Listening on Port ".concat(PORT, "!")); });
+// })
+// .catch((error) => {
+//   console.error(error);
+//   knex.destroy();
+// });
 //# sourceMappingURL=index.js.map
