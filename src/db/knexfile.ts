@@ -4,8 +4,9 @@
  * You will not need to make changes to this file.
  */
 
-require('dotenv').config();
-const path = require("path");
+import dotenv from 'dotenv';
+dotenv.config()
+import path from "path";
 
 const {
   DATABASE_URL = "postgresql://postgres@localhost/postgres",
@@ -15,7 +16,7 @@ const {
   DEBUG,
 } = process.env;
 
-module.exports = {
+export default {
   development: {
     client: "postgresql",
     pool: { min: 1, max: 5 },

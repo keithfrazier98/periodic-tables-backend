@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "build": "yarn tsc",
     "start:dev": "nodemon index.js",
     "test": "npx cross-env LOG_LEVEL=warn jest --runInBand --detectOpenHandles --forceExit",
     "test:1": "npm run test -- us-01",
