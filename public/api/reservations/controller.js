@@ -70,6 +70,8 @@ function list(req, res) {
                     return [3 /*break*/, 4];
                 case 2:
                     date = req.query.date;
+                    if (!date)
+                        throw new Error("No date in query string.");
                     return [4 /*yield*/, service_1.default.list(date)];
                 case 3:
                     data = _a.sent();

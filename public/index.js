@@ -17,9 +17,9 @@ var router_2 = __importDefault(require("./api/tables/router"));
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.use("/dashboard", router_1.default);
-app.use("/tables", router_2.default);
-app.use("/reservations", router_1.default);
+app.use("/api/dashboard", router_1.default);
+app.use("/api/tables", router_2.default);
+app.use("/api/reservations", router_1.default);
 app.use(notFound_1.default);
 app.use(errorHandler_1.default);
 connection_1.default.migrate
