@@ -7,7 +7,7 @@
 import express from "express";
 const router = express.Router();
 
-const controller = require("./reservations.controller");
+import controller from "./controller";
 router.route("/").get(controller.list).post(controller.create);
 router
   .route("/:reservation_id")

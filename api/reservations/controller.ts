@@ -298,7 +298,7 @@ function isPeopleNumber(req, res, next) {
     next();
   }
 }
-const exportAliases = {
+export default {
   list: asyncErrorBoundary(list),
   create: [
     asyncErrorBoundary(validateReservation),
@@ -318,4 +318,3 @@ const exportAliases = {
     asyncErrorBoundary(editReservation),
   ],
 };
-export { exportAliases };

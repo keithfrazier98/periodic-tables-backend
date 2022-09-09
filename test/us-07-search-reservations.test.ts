@@ -1,13 +1,13 @@
-const request = require("supertest");
+import request from "supertest";
 
-const app = require("../index.js");
-const knex = require("../src/db/connection");
+import * as app from "../index.js";
+import knex from "../src/db/connection";
 
 describe("US-07 - Search reservation by phone number", () => {
   beforeAll(() => {
     return knex.migrate
       .forceFreeMigrationsLock()
-      .then(() => knex.migrate.rollback(null, true))
+      .then(() => knex.migrate.rollback(undefined, true))
       .then(() => knex.migrate.latest());
   });
 
@@ -16,7 +16,9 @@ describe("US-07 - Search reservation by phone number", () => {
   });
 
   afterAll(async () => {
-    return await knex.migrate.rollback(null, true).then(() => knex.destroy());
+    return await knex.migrate
+      .rollback(undefined, true)
+      .then(() => knex.destroy());
   });
 
   describe("GET /reservations?mobile_number=...", () => {
