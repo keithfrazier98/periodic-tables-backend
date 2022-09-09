@@ -1,5 +1,4 @@
-const { get } = require("../index");
-const knex = require("../../src/db/connection");
+import knex from "../../src/db/connection";
 
 function list() {
   return knex("tables").select("*");

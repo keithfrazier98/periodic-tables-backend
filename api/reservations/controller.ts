@@ -12,6 +12,9 @@ async function list(req, res) {
     res.json({ data: searchResults });
   } else {
     let date = req.query.date;
+
+    if(!date) throw new Error ("No date in query string.")
+
     const data = await service.list(date);
 
     data.sort((t1, t2) => {
