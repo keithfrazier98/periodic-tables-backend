@@ -50,7 +50,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportAliases = void 0;
 var asyncErrorBoundary_1 = __importDefault(require("../../src/errors/asyncErrorBoundary"));
 var service_1 = __importDefault(require("./service"));
 /**
@@ -379,7 +378,7 @@ function isPeopleNumber(req, res, next) {
         next();
     }
 }
-var exportAliases = {
+exports.default = {
     list: (0, asyncErrorBoundary_1.default)(list),
     create: [
         (0, asyncErrorBoundary_1.default)(validateReservation),
@@ -399,5 +398,4 @@ var exportAliases = {
         (0, asyncErrorBoundary_1.default)(editReservation),
     ],
 };
-exports.exportAliases = exportAliases;
 //# sourceMappingURL=controller.js.map

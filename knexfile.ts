@@ -4,8 +4,8 @@
  * You will not need to make changes to this file.
  */
 
-import dotenv from 'dotenv';
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 import path from "path";
 
 const {
@@ -23,9 +23,11 @@ export default {
     connection: DATABASE_URL_DEVELOPMENT,
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
+      loadExtensions: [`.ts`],
     },
     seeds: {
       directory: path.join(__dirname, "src", "db", "seeds"),
+      loadExtensions: [`.ts`],
     },
     debug: !!DEBUG,
   },
@@ -35,9 +37,11 @@ export default {
     connection: DATABASE_URL_TEST,
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
+      loadExtensions: [`.ts`],
     },
     seeds: {
       directory: path.join(__dirname, "src", "db", "seeds"),
+      loadExtensions: [`.ts`],
     },
     debug: !!DEBUG,
   },
@@ -47,9 +51,11 @@ export default {
     connection: DATABASE_URL_PREVIEW,
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
+      loadExtensions: [`.ts`],
     },
     seeds: {
       directory: path.join(__dirname, "src", "db", "seeds"),
+      loadExtensions: [`.ts`],
     },
     debug: !!DEBUG,
   },
@@ -59,14 +65,16 @@ export default {
     connection: DATABASE_URL,
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
+      loadExtensions: [`.ts`],
     },
     seeds: {
       directory: path.join(__dirname, "src", "db", "seeds"),
+      loadExtensions: [`.ts`],
     },
     debug: !!DEBUG,
     ssl: {
       require: true,
-      rejectUnauthorized : false
+      rejectUnauthorized: false,
     },
   },
 };

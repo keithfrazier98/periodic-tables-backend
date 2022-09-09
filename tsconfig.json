@@ -16,7 +16,7 @@
     "resolveJsonModule": true
   },
   "assets": ["**/*.crt"],
-  "include": ["api/**/*.ts", "api/**/*.json", "index.ts", "test/*.ts"],
+  "include": ["api/**/*.ts", "api/**/*.json", "index.ts"],
   "exclude": ["node_modules", "api/**/*.spec.ts"],
   "compileOnSave": false
 }

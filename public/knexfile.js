@@ -19,9 +19,11 @@ exports.default = {
         connection: DATABASE_URL_DEVELOPMENT,
         migrations: {
             directory: path_1.default.join(__dirname, "src", "db", "migrations"),
+            loadExtensions: [".ts"],
         },
         seeds: {
             directory: path_1.default.join(__dirname, "src", "db", "seeds"),
+            loadExtensions: [".ts"],
         },
         debug: !!DEBUG,
     },
@@ -31,9 +33,11 @@ exports.default = {
         connection: DATABASE_URL_TEST,
         migrations: {
             directory: path_1.default.join(__dirname, "src", "db", "migrations"),
+            loadExtensions: [".ts"],
         },
         seeds: {
             directory: path_1.default.join(__dirname, "src", "db", "seeds"),
+            loadExtensions: [".ts"],
         },
         debug: !!DEBUG,
     },
@@ -43,9 +47,11 @@ exports.default = {
         connection: DATABASE_URL_PREVIEW,
         migrations: {
             directory: path_1.default.join(__dirname, "src", "db", "migrations"),
+            loadExtensions: [".ts"],
         },
         seeds: {
             directory: path_1.default.join(__dirname, "src", "db", "seeds"),
+            loadExtensions: [".ts"],
         },
         debug: !!DEBUG,
     },
@@ -55,14 +61,16 @@ exports.default = {
         connection: DATABASE_URL,
         migrations: {
             directory: path_1.default.join(__dirname, "src", "db", "migrations"),
+            loadExtensions: [".ts"],
         },
         seeds: {
             directory: path_1.default.join(__dirname, "src", "db", "seeds"),
+            loadExtensions: [".ts"],
         },
         debug: !!DEBUG,
         ssl: {
             require: true,
-            rejectUnauthorized: false
+            rejectUnauthorized: false,
         },
     },
 };
