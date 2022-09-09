@@ -1,7 +1,7 @@
 const request = require("supertest");
 
 const app = require("../api/app");
-const knex = require("../api/db/connection");
+const knex = require("../src/db/connection");
 
 describe("US-07 - Search reservation by phone number", () => {
   beforeAll(() => {

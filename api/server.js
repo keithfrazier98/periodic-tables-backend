@@ -1,7 +1,7 @@
 const { PORT = 5000 } = process.env;
 
 const app = require("./app");
-const knex = require("./db/connection");
+const knex = require("../src/db/connection");
 
 async function listener() {
   try {

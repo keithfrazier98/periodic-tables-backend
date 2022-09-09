@@ -5,8 +5,8 @@ require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const express = require("express");
 const cors = require("cors");
 
-const errorHandler = require("./errors/errorHandler");
-const notFound = require("./errors/notFound");
+const errorHandler = require("../src/errors/errorHandler");
+const notFound = require("../src/errors/notFound");
 const reservationsRouter = require("./reservations/reservations.router");
 const tablesRouter = require("./tables/tables.router")
 const app = express();

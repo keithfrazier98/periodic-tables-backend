@@ -1,4 +1,4 @@
-const knex = require("../db/connection");
+const knex = require("../../src/db/connection");
 
 function list(date) {
   return knex("reservations")
