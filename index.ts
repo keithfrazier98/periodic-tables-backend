@@ -25,13 +25,13 @@ app.use("/api/reservations", reservationsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-knex.migrate
-  .latest()
-  .then((migrations) => {
-    console.log("migrations", migrations);
+// knex.migrate
+//   .latest()
+//   .then((migrations) => {
+//     console.log("migrations", migrations);
     app.listen(PORT, () => console.log(`Listening on Port ${PORT}!`));
-  })
-  .catch((error) => {
-    console.error(error);
-    knex.destroy();
-  });
+  // })
+  // .catch((error) => {
+  //   console.error(error);
+  //   knex.destroy();
+  // });
