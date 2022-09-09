@@ -1,5 +1,5 @@
-const asyncErrorBoundary = require("../../src/errors/asyncErrorBoundary");
-const service = require("./reservations.service");
+import asyncErrorBoundary from "../../src/errors/asyncErrorBoundary";
+import service from "./service";
 
 /**
  * List handler for reservation resources
@@ -15,11 +15,11 @@ async function list(req, res) {
     const data = await service.list(date);
 
     data.sort((t1, t2) => {
-      t1_time = t1.reservation_time;
+      const t1_time = t1.reservation_time;
       const t1_hours = Number(`${t1_time[0]}${t1_time[1]}`);
       const t1_minutes = Number(`${t1_time[3]}${t1_time[4]}`);
 
-      t2_time = t2.reservation_time;
+      const t2_time = t2.reservation_time;
       const t2_hours = Number(`${t2_time[0]}${t2_time[1]}`);
       const t2_minutes = Number(`${t2_time[3]}${t2_time[4]}`);
 
@@ -189,9 +189,9 @@ function validateReservation(req, res, next) {
       let message = "";
 
       const date = new Date(`${value} ${attributes.reservation_time}`);
-      if (isNaN(date)) {
-        next({ status: 400, message: `${key}` });
-      }
+      // if (isNaN(date)) {
+      //   next({ status: 400, message: `${key}` });
+      // }
 
       const today = new Date(Date.now());
       const offset = today.getTimezoneOffset() / 60;
@@ -201,8 +201,8 @@ function validateReservation(req, res, next) {
       const compareDay = date.getDate() - today.getDate();
       const compareHours = date.getHours() + 7 - today.getHours();
       const compareMinutes = date.getMinutes() - today.getMinutes();
-  
-      let isInThePast = null;
+
+      let isInThePast;
       if (compareYear >= 0) {
         if (compareYear === 0) {
           if (compareMonth >= 0) {
@@ -285,19 +285,20 @@ async function editReservation(req, res, next) {
   res.status(200).json({ data: update[0] });
 }
 
-function isPeopleNumber(req, res , next){
-  const { data : {people} = {}} = req.body;
-  if (typeof people !== 'number'){
+function isPeopleNumber(req, res, next) {
+  const {
+    data: { people },
+  } = req.body;
+  if (typeof people !== "number") {
     return next({
       status: 400,
       message: "people: must be a Number",
-    })}
-  else{
-    next()
+    });
+  } else {
+    next();
   }
 }
-
-module.exports = {
+const exportAliases = {
   list: asyncErrorBoundary(list),
   create: [
     asyncErrorBoundary(validateReservation),
@@ -317,3 +318,4 @@ module.exports = {
     asyncErrorBoundary(editReservation),
   ],
 };
+export { exportAliases };

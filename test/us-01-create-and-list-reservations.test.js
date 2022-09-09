@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const app = require("../api/app");
+const app = require("../index.js");
 const knex = require("../src/db/connection");
 
 describe("US-01 - Create and list reservations", () => {

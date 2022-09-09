@@ -1,6 +1,6 @@
-const asyncErrorBoundary = require("../../src/errors/asyncErrorBoundary");
-const service = require("./tables.service");
-const ReservationService = require("../reservations/reservations.service");
+import { asyncErrorBoundary } from "../../src/errors";
+import service from "./service";
+import ReservationService from "../reservations/service";
 
 // validate table in req.body has proper data
 function validateTable(req, res, next) {
@@ -111,7 +111,7 @@ async function list(req, res) {
       (t1.table_name.includes("Bar") && t2.table_name.includes("Bar"))
     ) {
       let a = t1.table_name.split("");
-      let T1Num = [];
+      let T1Num: number[] = [];
       a.forEach((char) => {
         if (Number(char)) {
           T1Num.push(char);
@@ -120,7 +120,7 @@ async function list(req, res) {
       a = T1Num.join("");
 
       let b = t2.table_name.split("");
-      let T2Num = [];
+      let T2Num: number[] = [];
       b.forEach((char) => {
         if (Number(char)) {
           T2Num.push(char);
@@ -165,18 +165,16 @@ async function finishReservation(req, res) {
   let table = await service.read(table_id);
   const { reservation_id } = table;
   let resev = await ReservationService.read(reservation_id);
-  let updated = await service.updateRes(
-    {
-      ...resev,
-      status: "finished",
-    },
-    table_id
-  );
+  let updated = await service.updateRes({
+    ...resev,
+    status: "finished",
+  });
   await service.freeTable(table_id);
-  res.status(200).json({data:"finished"})
+  res.status(200).json({ data: "finished" });
 }
 
-module.exports = {
+
+export default {
   list: asyncErrorBoundary(list),
   create: [asyncErrorBoundary(validateTable), asyncErrorBoundary(create)],
   seatReservation: [

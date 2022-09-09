@@ -1,12 +1,12 @@
-const knex = require("../../src/db/connection");
+import knex from "../../src/db/connection";
 
-function list(date) {
+export function list(date) {
   return knex("reservations")
     .whereRaw(`reservation_date='${date}'`)
     .select("*");
 }
 
-function search(mobile_number) {
+export function search(mobile_number) {
   return knex("reservations")
     .whereRaw(
       "translate(mobile_number, '() -', '') like ?",
@@ -15,7 +15,7 @@ function search(mobile_number) {
     .orderBy("reservation_date");
 }
 
-function create(reservation) {
+export function create(reservation) {
   return knex("reservations")
     .insert(reservation)
     .returning([
@@ -29,22 +29,20 @@ function create(reservation) {
     ]);
 }
 
-
-
-function read(reservation_id) {
+export function read(reservation_id) {
   return knex("reservations")
     .whereRaw(`reservation_id='${reservation_id}'`)
     .select("*")
     .first();
 }
-function changeStatus(status, reservation_id) {
+export function changeStatus(status, reservation_id) {
   return knex("reservations")
     .whereRaw(`reservation_id=${reservation_id}`)
     .update("status", status)
-    .returning("status")
+    .returning("status");
 }
 
-function editReservation(reservation_id, reservation) {
+export function editReservation(reservation_id, reservation) {
   const {
     status,
     reservation_time,
@@ -78,11 +76,11 @@ function editReservation(reservation_id, reservation) {
     ]);
 }
 
-module.exports = {
+export default {
   list,
+  search,
   create,
   read,
   changeStatus,
   editReservation,
-  search,
 };

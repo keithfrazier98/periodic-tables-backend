@@ -1,4 +1,4 @@
-const { get } = require("../app");
+const { get } = require("../index");
 const knex = require("../../src/db/connection");
 
 function list() {
@@ -6,7 +6,6 @@ function list() {
 }
 
 function updateRes(reservation) {
-  
   return knex("reservations")
     .select("")
     .where({ reservation_id: reservation.reservation_id })
@@ -22,11 +21,13 @@ function assignId(table_id, reservation_id) {
 }
 
 function create(table) {
-  return knex("tables").insert(table).returning(["table_id", "table_name", "capacity"]);
+  return knex("tables")
+    .insert(table)
+    .returning(["table_id", "table_name", "capacity"]);
 }
 
-function destroy(table_id){
-  return knex("tables").whereRaw(`table_id=${table_id}`).del()
+function destroy(table_id) {
+  return knex("tables").whereRaw(`table_id=${table_id}`).del();
 }
 
 function reservationExists(reservation_id) {
@@ -53,7 +54,7 @@ function finishReservation(reservation_id) {
     .whereRaw(`reservation_id=${reservation_id}`)
     .update(`status`, "finished");
 }
-module.exports = {
+export default {
   list,
   create,
   assignId,
@@ -61,6 +62,6 @@ module.exports = {
   read,
   finishReservation,
   reservationExists,
-  updateRes, 
-  destroy
+  updateRes,
+  destroy,
 };
