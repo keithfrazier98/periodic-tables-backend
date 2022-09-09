@@ -2,15 +2,15 @@
   "name": "starter-restaurant-reservation-back-end",
   "version": "1.0.0",
   "description": "Starter code for restaurant reservation backend",
-  "main": "src/server.js",
+  "main": "api/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Thinkful-Ed/starter-restaurant-reservation",
     "directory": "/back-end"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "start:dev": "nodemon src/server.js",
+    "start": "node api/server.js",
+    "start:dev": "nodemon api/server.js",
     "test": "npx cross-env LOG_LEVEL=warn jest --runInBand --detectOpenHandles --forceExit",
     "test:1": "npm run test -- us-01",
     "test:2": "npm run test -- us-02",

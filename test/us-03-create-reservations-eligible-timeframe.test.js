@@ -1,7 +1,7 @@
 const request = require("supertest");
 
-const app = require("../src/app");
-const knex = require("../src/db/connection");
+const app = require("../api/app");
+const knex = require("../api/db/connection");
 
 describe("US-03 - Create reservations eligible timeframe", () => {
   beforeAll(() => {
