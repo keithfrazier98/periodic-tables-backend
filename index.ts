@@ -1,6 +1,6 @@
 const { PORT = 5000 } = process.env;
 
-import knex from "./src/db/connection";
+// import knex from "./src/db/connection";
 import path from "path";
 
 import dotenv from "dotenv";
@@ -25,6 +25,7 @@ app.use("/api/reservations", reservationsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
+// TODO: add dev env check to support migrations on spinup
 // knex.migrate
 //   .latest()
 //   .then((migrations) => {
