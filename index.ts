@@ -25,15 +25,13 @@ app.use("/reservations", reservationsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-async function listener() {
-  try {
-    const migrations = await knex.migrate.latest();
+knex.migrate
+  .latest()
+  .then((migrations) => {
     console.log("migrations", migrations);
     app.listen(PORT, () => console.log(`Listening on Port ${PORT}!`));
-  } catch (error) {
+  })
+  .catch((error) => {
     console.error(error);
     knex.destroy();
-  }
-}
-
-listener();
+  });
