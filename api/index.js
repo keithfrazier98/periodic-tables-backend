@@ -1,2 +1,1 @@
-export * from './reservations'
-export * from './tables'
+export * from './app'
