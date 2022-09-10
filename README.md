@@ -10,8 +10,8 @@ Express backend with routes to handle API calls and send/request data to and fro
 
 - Express JS
 - Knex
-- Javascript
-- Heroku-PostgresSQL
+- Typescript
+- Vercel
 
 ## **API Overview**
 
